@@ -2,19 +2,23 @@ import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 
-function MainNavigation() {
+import axios from 'axios';
+
+function MainNavigation({  setSearchResults: setParentSearchResults })  {
   const location = useLocation();
   const isProductsPage = location.pathname === '/products';
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
   const handleSearch = async () => {
     try {
       const response = await axios.post('https://api2.mymarket.ge/api/ka/products', {
         Keyword: searchInput,
-        Limit: 12
+        Limit: 12,
       });
 
       setSearchResults(response.data.data.Prs);
+      console.log(response.data.data.Prs);
     } catch (error) {
       console.error('Request error:', error);
     }
@@ -37,20 +41,13 @@ function MainNavigation() {
       <nav>
         <ul className={classes.list}>
           <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? classes.active : undefined)}
-              end
-            >
+            <NavLink to="/" className={({ isActive }) => (isActive ? classes.active : undefined)}end>
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/login"
-              className={({ isActive }) => (isActive ? classes.active : undefined)}
-            >
-              log in
+            <NavLink to="/login" className={({ isActive }) => (isActive ? classes.active : undefined)}>
+              Log In
             </NavLink>
           </li>
         </ul>
@@ -60,3 +57,6 @@ function MainNavigation() {
 }
 
 export default MainNavigation;
+
+
+
