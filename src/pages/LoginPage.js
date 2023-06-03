@@ -10,8 +10,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Your login logic goes here
-    navigate('/'); // Redirect to the home page after successful login
+    
+    navigate('/'); 
   };
 
   return (
